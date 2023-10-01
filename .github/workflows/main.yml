@@ -26,6 +26,7 @@ jobs:
         run: |
           docker buildx create --use
           docker buildx build --platform linux/amd64 -t ubairnisar/mlops:latest .
+          docker images
         # Note: We removed the --output flag since it's not necessary.
 
       - name: Push Docker image to Docker Hub
