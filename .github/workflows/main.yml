@@ -13,24 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
+      - name: Build and push Docker image
         run: |
-          docker buildx create --use
-          docker buildx build --platform linux/amd64 -t ubairnisar/mlops:latest .
-          docker images
-        # Note: We removed the --output flag since it's not necessary.
-
-      - name: Push Docker image to Docker Hub
-        run: |
+          docker build -t ubairnisar/mlops:latest .
           docker push ubairnisar/mlops:latest
 
       - name: Run Docker container
