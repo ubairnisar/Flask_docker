@@ -22,10 +22,14 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         run: |
           docker buildx create --use
           docker buildx build --platform linux/amd64 -t ubairnisar/mlops:latest .
+        # Note: We removed the --output flag since it's not necessary.
+
+      - name: Push Docker image to Docker Hub
+        run: |
           docker push ubairnisar/mlops:latest
 
       - name: Run Docker container
